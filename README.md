@@ -14,13 +14,21 @@ User can perform following operations:
   Important: To run Project, follow these steps:
 
   1: First run BE Node server, to make sure BE API's in express work, Open new terminal in VS Code after cloning project and run following command after this PS F:\Mern Stack Projects\MultiFileUplaodReact+Node+MongoDB\MultiFileUploadMERN> npm install --legacy-peer-deps
+  
   2: This will install your BE node modules, now run command cd backendexpressnode
+  
   3: Now replace line 13 in App.js file in backendexpressnode folder and add your own connection string after mongoose.connect.
+  
   4: Now run command node .\App.js to make API run on localhost:3200
+  
   5: To run FE, open new terminal and enter command cd FrontEndReact and click enter
+  
   6: Now enter command cd multifileupload and click enter
+  
   7: run command npm install --legacy-peer-deps
+  
   8: Lastly, run commnand npm start, to make your FE run on localhost:3000, make sure your BE API's are giving 200 status code, check network tab for it.
+  
 
 
   Thanks & Happy Coding!.
