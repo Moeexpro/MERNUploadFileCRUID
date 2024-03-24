@@ -19,7 +19,8 @@ User can perform following operations:
   
   3: Now replace line 13 in App.js file in backendexpressnode folder and add your own connection string after mongoose.connect.
   
-  4: Now run command node .\App.js to make API run on localhost:3200
+  4: Now run command node .\App.js to make API run on localhost:3200, you will see this after running this command ![image](https://github.com/Moeexpro/MERNUploadFileCRUID/assets/45965772/f4e1d89f-5fed-4cdf-acf1-253076d1e447)
+
   
   5: To run FE, open new terminal and enter command cd FrontEndReact and click enter
   
