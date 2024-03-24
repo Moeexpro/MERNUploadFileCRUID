@@ -3,8 +3,11 @@ MERN Upload File CRUID Project is developed with React, Typescript, React Query,
 User can perform following operations: 
 
 1: User can upload a file.
+
 2: User can then perform Cruid operations on uploaded file through MUI table such as preview file, delete, and download.
+
 3: File is previewed in a drawer slideout which opens from right after clicking on preview icon of file in table.
+
 4: User can also preview, delete and download video files.
 
 
