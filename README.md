@@ -10,7 +10,7 @@ User can perform following operations:
 
 4: User can also preview, delete and download video files.
 
-
+- Make sure you create your branch from main branch and push your code to that branch.
 - Note: BE and FE are not yet deployed, BE Node will run on localhost:3200, while FE will run on localhost:3000
 - Ignore warning of File Previewer library when FE is loaded just click on X icon.
 
