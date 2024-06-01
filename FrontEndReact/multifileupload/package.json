@@ -21,7 +21,7 @@
     "axios": "^1.6.8",
     "rc-drawer": "^7.1.0",
     "react": "^18.2.0",
-    "react-doc-viewer": "^0.1.5",
+    "react-doc-viewer": "^0.1.11",
     "react-dom": "^18.2.0",
     "react-file-previewer": "^0.6.3",
     "react-file-viewer": "^1.2.1",
