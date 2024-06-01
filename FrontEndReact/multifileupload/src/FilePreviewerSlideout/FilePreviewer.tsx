@@ -2,7 +2,8 @@ import React from "react";
 import ReactPlayer from "react-player";
 import {Drawer} from 'antd';
 // @ts-ignore
-import FileViewer from 'react-file-viewer';
+import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import { Height } from "@mui/icons-material";
 
 interface IProps {
     fileName : string;
@@ -13,6 +14,10 @@ interface IProps {
 
 const FilePreviewer = ({fileName,filePath, setOpenFilePreviewer,openFilePreviewer} : IProps) => {
     const getFileExt = fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length);
+    console.log(filePath);
+    const docs = [{
+        uri: filePath
+    }]
     console.log("File Ext",getFileExt);
 return (
 <div data-testid="FilePreviewer_Container" className="bg-blue-300">
@@ -21,7 +26,7 @@ return (
       placement="right"
       open={openFilePreviewer}
       onClose={() => setOpenFilePreviewer(false)}
-      width={300}
+      width={600}
     >
         <div className="w-full p-4 h-full flex flex-col justify-start items-center gap-8">
             <span className="text-blue-500 font-medium text-lg">{fileName}</span>
@@ -29,10 +34,11 @@ return (
  <ReactPlayer controls url={filePath}/>
  </div>
 :
-<div className="bg-lime-100 w-full h-full">
- <FileViewer
-fileType={getFileExt}
-filePath={filePath}
+<div className="w-full h-full justify-center items-center">
+ <DocViewer
+pluginRenderers={DocViewerRenderers}
+documents={docs}
+style={{width: 500, height: 700}}
 />
 </div>
 }

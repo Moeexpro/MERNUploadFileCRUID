@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 
 const fileSchema = new mongoose.Schema({
     file : String,
-    fileName : String
+    fileName : String,
+    file64: String
 });
 
 

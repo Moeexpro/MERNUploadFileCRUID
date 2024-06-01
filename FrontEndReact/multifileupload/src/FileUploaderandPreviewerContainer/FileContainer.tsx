@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Icon, IconButton } from "@mui/material";
 import { CloudUploadOutlined, Delete, Preview, Download } from "@mui/icons-material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -12,7 +12,15 @@ interface IFileObj {
     _id : string;
     file : string;
     fileName : string;
+    file64: string;
     message : string;
+}
+
+interface ITableObj {
+    id: string;
+    fileName: string;
+    fileURL: string;
+    filePath64: string;
 }
 
 const FileContainer = () => {
@@ -26,16 +34,18 @@ const FileContainer = () => {
     const [downloadingFile,setDownloadingFile] = useState<boolean>(false);
     const [toastOpen,setToastOpen] = useState<boolean>(false);
     const [apiMessage,setAPIMessage] = useState<string>();
+    const [tableData,setTableData] = useState<ITableObj[]>([]);
     const [uploadingFiles,setUploadingFiles] = useState<boolean>(true);
     const handleFileUpload = (e : any) => {
     const fileObj = e.target.files[0];
+    console.log("FileObj",fileObj);
     setUploadingFiles(false);
     setFileName(fileObj.name);
     const reader = new FileReader();
     reader.readAsDataURL(fileObj);
     reader.onload = (event : any) => {
         console.log("Base64 File",event.target.result);
-        setFilePath(event.target.result);
+        setFilePath(event.target.result.split(',')[1]);
     }
     reader.onerror = error => {
         console.log("Error",error);
@@ -49,13 +59,27 @@ const FileContainer = () => {
     }
     const handlePreviewFile = (cellvalues : any) => {
 setFileNamePreviewer(cellvalues?.row?.fileName);
-setFilePathPreviewer(cellvalues?.row?.filePath);
+setFilePathPreviewer(cellvalues?.row?.fileURL);
 setOpenFilePreviewer(true);
+    }
+    const handleFileTypeBase64 = (fileName: string) => {
+        const checkEXT = fileName?.substring(
+            fileName?.lastIndexOf(".") + 1,
+            fileName?.length);
+        switch(checkEXT)
+        {
+            case "pdf": return 'application/pdf';
+            case "doc": return 'application/msword';
+            case "jpeg": return 'image/jpeg';
+            case "png":  return 'image/png';
+            case "mp4": return 'video/mp4';
+            default: return 'application/octet-stream';
+        }
     }
     const handleDownloadFile = async(cellvalues : any) => {
         setDownloadingFile(true);
         const downloadLink = document.createElement("a");
-        downloadLink.href =  cellvalues.row.filePath;
+        downloadLink.href =  `data:${handleFileTypeBase64(cellvalues.row.fileName)};base64,${cellvalues.row.filePath64}`;
         downloadLink.download = cellvalues.row.fileName;
         downloadLink.click();
         setDownloadingFile(false);
@@ -130,20 +154,23 @@ setOpenFilePreviewer(true);
     }
     })
     
-    const getTableData = () : any[]  => {
-        const dupFiles = [...filesData];
-        console.log(dupFiles);
-        const finalFilesData = dupFiles?.map((file : IFileObj) => {
+    const getTableData = () => {
+        const finalFilesData = filesData?.map((file : IFileObj) => {
             return {
                 id : file._id,
                 fileName : file.fileName,
-                filePath : file.file
+                fileURL : file.file,
+                filePath64: file.file64
             }
         })
-        return finalFilesData;
+       setTableData(finalFilesData);
     }
+    useEffect(()=> {
+    filesData?.length > 0 && getTableData();
+    filesData?.length === 0 && setTableData([]);
+    },[filesData])
     return(
-        <div data-testid="FilesMain_Container" className="w-full h-[calc(100dvh)]">
+        <div data-testid="FilesMain_Container" className="min-w-[1440px] h-[calc(100dvh)]">
        {filesGetLoader === true || filesGetLoad === true && <div data-testid="FilesLoader_Container" className="w-full h-full flex justify-center items-center">
             <CircularProgress/>
         </div>
@@ -165,12 +192,13 @@ disabled = {uploadingFiles}
 Upload file
 </Button>
 </div>
-<div data-testid="FilesTable_Container" className="flex w-full overflow-x-scroll">
+{tableData?.length > 0 && <div data-testid="FilesTable_Container" className="flex w-full">
 <DataGrid
-  rows={getTableData()}
+  rows={tableData}
   columns={columns}
 />
     </div>
+}
     <div data-testid="FilesPreviewer">
         {fileNamePreviewer && filePathPreviewer &&
         <FilePreviewer
