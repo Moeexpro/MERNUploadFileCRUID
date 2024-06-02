@@ -11,14 +11,18 @@ dotenv.config();
 app.use(bodyParser.json({ limit: '100mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }));
 app.use(cors());
-const FileSchema = require('./Models/Files');
-const functions = require('./Functions/AzureFunctions');
+const FileSchema = require('../Models/Files');
+const serverless = require('serverless-http');
+const functions = require('../devOpsFunctions/AzureFunctions');
+const router = express.Router();
+router.use(bodyParser.json({ limit: '100mb' }));
+router.use(bodyParser.urlencoded({ extended: true, limit: '100mb' }));
 // Replace with your Azure Storage account name and key
 const accountName = process.env.accountName;
 const accountKey = process.env.accountKey;
 
-//MongoConnectionString
-const mongoURL = process.env.mongoURL;
+//MongoPass
+const mongoPassword = process.env.mongopass;;
 
 
 // Create the BlobServiceClient
@@ -27,27 +31,27 @@ const blobServiceClient = new azureblob.BlobServiceClient(
     new azureblob.StorageSharedKeyCredential(accountName, accountKey)
 );
 
-mongoose.connect(mongoURL).then(() => {
+mongoose.connect(`mongodb+srv://moeezamir79:${mongoPassword}@cluster0.nx9opu0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`).then(() => {
     console.log("Connected to MongoDB")
     app.listen(3200, () => {
         console.log(`Server ruhning at PORT http://localhost:${3200}`);
     })
 }).catch((error)=> console.log(error.message));
 
-app.get('/',(req,res)=>{
+router.get('/',(req,res)=>{
     res.json({
         name: "Moeez"
     })
 })
 
-app.use((req, res, next) => {
+router.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
     next();
   });
 
 // Post API for uploading Files...
-app.post('/api/uploadFiles', async (req, res) => {
+router.post('/uploadFiles', async (req, res) => {
     const { filebase64, fileName } = req.body;
     const containerName = "files";
     try {
@@ -69,6 +73,7 @@ app.post('/api/uploadFiles', async (req, res) => {
                 message: "File Uploaded Successfully"
             })
         })
+        
     }
 
     else
@@ -98,7 +103,7 @@ else
 })
 
 // Get API to fetch all uploaded files...
-app.get('/api/getFiles', async (req, res) => {
+router.get('/getFiles', async (req, res) => {
     try {
         await FileSchema.find().then((response) => {
             res.status(200).json({
@@ -116,7 +121,7 @@ app.get('/api/getFiles', async (req, res) => {
 })
 
 // Delete API to delete uploaded files... 
-app.delete('/api/deleteFiles/:id',async(req,res)=> {
+router.delete('/deleteFiles/:id',async(req,res)=> {
 try{
     await FileSchema.findByIdAndDelete(req.params.id).then(()=>{
         res.status(200).json({
@@ -131,7 +136,7 @@ catch(error)
 })
 
 //Update FileName API
-app.put('/api/updateFile/:id',async(req,res)=> {
+router.put('/updateFile/:id',async(req,res)=> {
     const {fileName,file} = req.body;
 try{
     if(fileName?.length > 0 && file?.length > 0)
@@ -155,3 +160,7 @@ catch(error)
     })
 }
 })
+
+
+app.use('/.netlify/functions/api',router);
+module.exports.handler = serverless(app);

@@ -160,7 +160,10 @@ setOpenFilePreviewer(true);
     })
     
     const getTableData = () => {
-        const finalFilesData = filesData?.map((file : IFileObj) => {
+
+        if(filesData && filesData?.length > 0 && filesData !== undefined)
+            {
+        const finalFilesData = filesData.map((file : IFileObj) => {
             return {
                 id : file._id,
                 fileName : file.fileName,
@@ -170,17 +173,22 @@ setOpenFilePreviewer(true);
         })
        setTableData(finalFilesData);
     }
+    else
+    {
+        setTableData([]);
+    }
+    }
     useEffect(()=> {
-    filesData?.length > 0 && getTableData();
-    filesData?.length === 0 && setTableData([]);
+        console.log("Files Data",filesData);
+       getTableData();
     },[filesData])
+    if(filesGetLoader || filesGetLoad)
+        return <div data-testid="FilesLoader_Container" className="w-screen h-screen flex justify-center items-center">
+    <CircularProgress/>
+</div>
     return(
         <div data-testid="FilesMain_Container" className="min-w-[1440px] h-[calc(100dvh)]">
-       {filesGetLoader === true || filesGetLoad === true && <div data-testid="FilesLoader_Container" className="w-full h-full flex justify-center items-center">
-            <CircularProgress/>
-        </div>
-}
-       { filesGetLoader === false && <div data-testid="FilesProject_Container" className="w-full h-full p-4 bg-zinc-50 flex flex-col gap-8">
+     <div data-testid="FilesProject_Container" className="w-full h-full p-4 bg-zinc-50 flex flex-col gap-8">
 <span className="text-sm w-full flex flex-row justify-center text-pretty sm:text-lg text-blue-600 font-semibold font-serif">MERN Multi File Upload CRUID</span>
 <div data-testid="UploadFiles_Container" className="flex flex-row p-8 justify-between rounded-md bg-slate-500">
 <input type="file" onChange={(e) => handleFileUpload(e)}></input>
@@ -222,7 +230,7 @@ Upload file
 />
 </div>
 
-}
+
 </div>
     )
 }

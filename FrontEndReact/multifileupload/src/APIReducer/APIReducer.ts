@@ -28,6 +28,7 @@ catch(error : any)
 
 export const getFilesAPI = async() => {
 try{
+     console.log(apiPaths.base);
     const resp = await axios.get(`${apiPaths.base}${apiPaths.getFiles}`,{
         headers: {
             "Access-Control-Allow-Origin" : "*",
