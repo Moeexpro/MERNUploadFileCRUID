@@ -1,4 +1,4 @@
-MERN Upload File CRUID Project is developed with React, Typescript, React Query, Tailwind Css, MUI, Express, Node and MongoDB.
+MERN Upload File CRUID Project is developed with React, Typescript, React Query, Tailwind Css, MUI, Express, Node and MongoDB and Blob storage.
 
 User can perform following operations: 
 
