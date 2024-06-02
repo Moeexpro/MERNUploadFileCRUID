@@ -57,9 +57,14 @@ const FileContainer = () => {
     await deleteFile(cellvalues.id);
     setDeletingFile(false);
     }
-    const handlePreviewFile = (cellvalues : any) => {
+    const timeout = async(value:number) => {
+    return new Promise(res => setTimeout(res,value));
+    }
+    const handlePreviewFile = async(cellvalues : any) => {
+        setFilePathPreviewer("");
 setFileNamePreviewer(cellvalues?.row?.fileName);
 setFilePathPreviewer(cellvalues?.row?.fileURL);
+await timeout(500);
 setOpenFilePreviewer(true);
     }
     const handleFileTypeBase64 = (fileName: string) => {
