@@ -1,5 +1,13 @@
 MERN Upload File CRUID Project is developed with React, Typescript, React Query, Tailwind Css, MUI, Express, Node and MongoDB and Blob storage.
 
+BE API baseURL deployed on netlify: https://mernuploadbe.netlify.app/.netlify/functions/api
+
+BE API's endpoints:
+1: /getFIles
+2: /uploadFiles
+3: /deleteFiles/:id
+4: /updateFile/:id
+
 User can perform following operations: 
 
 1: User can upload a file.
