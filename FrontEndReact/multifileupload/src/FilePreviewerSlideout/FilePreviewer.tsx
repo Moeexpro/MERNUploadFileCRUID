@@ -3,7 +3,6 @@ import ReactPlayer from "react-player";
 import {Drawer} from 'antd';
 // @ts-ignore
 import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
-import { Height } from "@mui/icons-material";
 
 interface IProps {
     fileName : string;
@@ -16,7 +15,8 @@ const FilePreviewer = ({fileName,filePath, setOpenFilePreviewer,openFilePreviewe
     const getFileExt = fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length);
     console.log(filePath);
     const docs = [{
-        uri: filePath
+        uri: filePath,
+        fileType: getFileExt
     }]
     console.log("File Ext",getFileExt);
 return (
