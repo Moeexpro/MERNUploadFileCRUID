@@ -19,8 +19,7 @@ User can perform following operations:
 4: User can also preview, delete and download video files.
 
 - Make sure you create your branch from main branch and push your code to that branch.
-- Note: BE and FE are not yet deployed, BE Node will run on localhost:3200, while FE will run on localhost:3000
-- Ignore warning of File Previewer library when FE is loaded just click on X icon.
+- Note: BE Node will run on localhost:3200, while FE will run on localhost:3000
 
   Important: To run Project, follow these steps:
 
@@ -28,7 +27,7 @@ User can perform following operations:
   
   2: This will install your BE node modules, now run command cd backendexpressnode
   
-  3: Now replace line 13 in App.js file in backendexpressnode folder and add your own connection string after mongoose.connect.
+  3: Set your environment variables by creating a .env file in backendexpressnode folder and check env.example file for reference.
   
   4: Now run command node .\App.js to make API run on localhost:3200, you will see this after running this command ![image](https://github.com/Moeexpro/MERNUploadFileCRUID/assets/45965772/f4e1d89f-5fed-4cdf-acf1-253076d1e447)
 
