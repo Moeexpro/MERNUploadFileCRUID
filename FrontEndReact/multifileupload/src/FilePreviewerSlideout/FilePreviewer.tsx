@@ -2,9 +2,7 @@ import React from "react";
 import ReactPlayer from "react-player";
 import {Drawer} from 'antd';
 // @ts-ignore
-import DocViewer, { DocViewerRenderers } from "react-doc-viewe
-import '@react-pdf-viewer/core/lib/styles/index.css';
-import '@react-pdf-viewer/default-layout/lib/styles/index.css';
+import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
 
 interface IProps {
     fileName : string;
