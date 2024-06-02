@@ -2,7 +2,9 @@ import React from "react";
 import ReactPlayer from "react-player";
 import {Drawer} from 'antd';
 // @ts-ignore
-import DocViewer, { DocViewerRenderers } from "react-doc-viewer";
+import DocViewer, { DocViewerRenderers } from "react-doc-viewe
+import '@react-pdf-viewer/core/lib/styles/index.css';
+import '@react-pdf-viewer/default-layout/lib/styles/index.css';
 
 interface IProps {
     fileName : string;
@@ -13,6 +15,7 @@ interface IProps {
 
 const FilePreviewer = ({fileName,filePath, setOpenFilePreviewer,openFilePreviewer} : IProps) => {
     const getFileExt = fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length);
+    console.log(getFileExt);
     console.log(filePath);
     const docs = [{
         uri: filePath,
@@ -20,10 +23,11 @@ const FilePreviewer = ({fileName,filePath, setOpenFilePreviewer,openFilePreviewe
     }]
     console.log("File Ext",getFileExt);
 return (
-<div data-testid="FilePreviewer_Container" className="bg-blue-300">
+<div data-testid="FilePreviewer_Container">
 <Drawer
       title="File Previewer"
       placement="right"
+      //className="w-[600px] h-screen bg-blue-300"
       open={openFilePreviewer}
       onClose={() => setOpenFilePreviewer(false)}
       width={600}
@@ -36,7 +40,7 @@ return (
 :
 <div className="w-full h-full justify-center items-center">
  <DocViewer
-pluginRenderers={DocViewerRenderers}
+ pluginRenderers={DocViewerRenderers}
 documents={docs}
 style={{width: 500, height: 700}}
 />
