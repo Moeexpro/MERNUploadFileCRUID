@@ -13,13 +13,10 @@ interface IProps {
 
 const FilePreviewer = ({fileName,filePath, setOpenFilePreviewer,openFilePreviewer} : IProps) => {
     const getFileExt = fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length);
-    console.log(getFileExt);
-    console.log(filePath);
     const docs = [{
         uri: filePath,
         fileType: getFileExt
     }]
-    console.log("File Ext",getFileExt);
 return (
 <div data-testid="FilePreviewer_Container">
 <Drawer
@@ -40,7 +37,7 @@ return (
  <DocViewer
  pluginRenderers={DocViewerRenderers}
 documents={docs}
-style={{width: 500, height: 700}}
+style={{width: 500, height: 700, overflowX: 'scroll'}}
 />
 </div>
 }

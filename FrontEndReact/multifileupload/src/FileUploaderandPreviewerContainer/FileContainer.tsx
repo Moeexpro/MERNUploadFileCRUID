@@ -273,11 +273,11 @@ const FileContainer = () => {
   return (
     <div
       data-testid="FilesMain_Container"
-      className="min-w-[1440px] h-[calc(100dvh)]"
+      className="min-w-[1440px] h-screen md:w-screen md:h-screen"
     >
       <div
         data-testid="FilesProject_Container"
-        className="w-full h-full p-4 bg-zinc-50 flex flex-col gap-8"
+        className="w-full h-full p-4 flex flex-col gap-8"
       >
         <span className="text-sm w-full flex flex-row justify-center text-pretty sm:text-lg text-blue-600 font-semibold font-serif">
           MERN Multi File Upload CRUID
@@ -325,7 +325,7 @@ const FileContainer = () => {
           />
         </div>
         {searchTableData?.length > 0 && (
-          <div data-testid="FilesTable_Container" className="flex w-full">
+          <div data-testid="FilesTable_Container" className="flex w-full overflow-x-scroll">
             <DataGrid rows={searchTableData} columns={columns} />
           </div>
         )}
